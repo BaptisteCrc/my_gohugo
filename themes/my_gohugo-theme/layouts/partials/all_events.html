@@ -1,0 +1,59 @@
+<div class="row all" style="display:none;">
+        <h1 class="indigo-text" style="position:relative;left:5%;font-size:4vw;">All Events</h1>            
+        {{ $asso := .Site.GetPage "/associations" }}
+        {{ range (.Data.Pages.ByParam "when")}}    
+            <div class="row all" style="display:none;">
+                <div class="col s12 m7">
+                    <div class="card  horizontal indigo lighten-1 center white-text" style="height:20vw;position:relative;left:40%;">
+                        <div class="card-image black" style="width:50%;">
+                            <img src={{ .Params.photos }} style="width:100%;height:100%">
+                        </div>
+                        <div class="card-stacked" style="position:relative">
+                            <div class="card-content" style="position:relative;top:10%;">
+                                <a style="font-size:3vw;" class="white-text" 
+                                    {{if eq .Params.draft false}}
+                                        href="{{.Permalink}}"
+                                    {{end}}>
+                                {{.Params.title}}</a></br>
+                                <a style="font-size:1.5vw;" class="white-text"
+                                    {{$name := .Params.association}}
+                                    {{range $asso.Data.Pages}}
+                                        {{if eq .Params.title $name}}
+                                            href="{{.Permalink}}"
+                                        {{end}}
+                                    {{end}}>
+                                {{.Params.association}}</a>
+                                <p style="font-size:1vw;">{{.Params.label}}</p>
+                                <p style="font-size:1vw;">{{((time .Params.when).Format "02 January, 2006")}}</p>
+                            </div>
+                            <div class="card-action indigo lighten-5">
+                                {{if eq .Params.draft false}}
+                                    <a href="{{.Permalink}}" class="waves-effect waves-light btn indigo white-text">Details</a>
+                                {{end}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{end}}
+    </div>
+
+    <script type="text/javascript">
+           
+        var bool = 0;
+        var elmt = document.getElementsByClassName("all");
+        var b1 = document.getElementById("all_events");
+        b1.onclick = function(){
+            if (bool == 0){
+                for(var cn=0, len=elmt.length; cn < len; cn+=1){
+                    elmt[cn].style.display="block";
+                }
+                bool=1;
+            } else {
+                for(var cn=0, len=elmt.length; cn < len; cn+=1){
+                    elmt[cn].style.display="none";
+                }
+                bool=0;
+            }
+        }
+    </script>

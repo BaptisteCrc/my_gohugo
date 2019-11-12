@@ -1,0 +1,17 @@
+<div class="row">
+        <h1 class="col s4 indigo-text" style="font-size:3vw;position:relative;left:6%;">Presentation</h1>
+        <div class="col s8 indigo" style="width:65%;height:0.3vw;position:relative;top:4vw;left:1%;"></div>
+</div>
+{{ $pres := .Site.GetPage "/presentation" }}
+{{ range  $pres.Data.Pages }} 
+  <div class="row">
+    <div class="card indigo lighten-1 white-text">
+        <div class="card-image black" style="max-width:60%;max-height:25vw;position:relative;left:20%;">
+            <img src="{{.Params.photos}}" style="width:100%;height:100%;">
+        </div>
+        <div class="card-content center">
+          <p style="font-size:1.3vw">{{.Content}}</p>
+        </div>
+    </div>
+  </div>
+{{end}}

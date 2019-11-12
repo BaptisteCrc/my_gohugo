@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{  partial "head.html" . }}
+    <body>
+        {{ partial "header.html" . }}
+        <div style="width:85%;" class="blue-grey lighten-5">
+            <div class="row">
+                <h1 class="col s2 indigo-text" style="font-size:3vw;position:relative;left:6%;">Events</h1>
+            <div class="col s10 indigo" style="width:80%;height:0.3vw;position:relative;top:4vw;left:3%;"></div>
+        </div>
+        <div class="row">
+            <div class="col s4 center">
+                <button class="btn waves-effect waves-light white-text indigo" id="all_events" style="position:relative;left:10%;width:40%;height:3vw;" type="submit" name="action">All Events</button>
+            </div>
+            <div class="col s4 center">
+                <button class="btn waves-effect waves-light white-text indigo" id="upcoming_events" style="position:relative;left:10%;width:40%;height:3vw;" type="submit" name="action">Upcoming Events</button>
+            </div>
+            <div class="col s4 center">
+                <button class="btn waves-effect waves-light white-text indigo" id="archived_events" style="position:relative;left:10%;width:40%;height:3vw;" type="submit" name="action">Archived Events</button>
+            </div>
+        </div>
+        {{ partial "all_events" . }}
+        {{ partial "upcoming_events" . }}
+        {{ partial "archived_events" . }}
+        {{ partial "footer.html" . }}
+    </body>
+</html>

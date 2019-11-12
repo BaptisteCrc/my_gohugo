@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{  partial "head.html" . }}
+    <body>
+        {{ partial "header.html" . }}
+        <div class="row">
+            <div class="col s12 m7">
+                <p style="font-size:3vw;position:relative;left:40%;" class="indigo-text">{{.Params.title}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m7">
+                <div class="card  horizontal indigo lighten-1 center white-text" style="height:20vw;position:relative;left:40%;">
+                    <div class="card-image black" style="width:50%;">
+                        <img src= {{ .Params.photos }} style="width:100%;height:100%">
+                    </div>
+                    <div class="card-stacked" style="position:relative">
+                        <div class="card-content" style="position:relative;top:10%;">
+                            <p style="font-size:2vw;">{{.Params.domain}}</p>
+                            <p style="font-size:2vw;">{{.Params.address}}<p>
+                            <p style="font-size:1vw;text-decoration:underline;" class="white-text">{{.Params.association}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m7">
+                <div class="card  horizontal indigo lighten-1 center white-text" style="height:20vw;position:relative;left:40%;">
+                    <div class="card-stacked" style="position:relative">
+                        <div class="card-conten">
+                            <p style="font-size:1vw;">{{.Params.Description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row indigo">
+            <div class="col s12 m7">
+                <h1 class="center white-text">Events</h1>
+                {{ $name := .Title}}
+                {{ $ev := .Site.GetPage "/events" }}
+                {{ range ($ev.Data.Pages.ByParam "when") }} 
+                    {{ if eq .Params.association $name}}
+                        {{ if (time .Params.when).After now}}
+                            <div class="row">
+                                <div class="col s12 m7">
+                                    <div class="card  horizontal white center indigo-text" style="height:20vw;position:relative;left:100%;">
+                                        <div class="card-image black" style="width:50%;">
+                                            <img src={{ .Params.photos }} style="width:100%;height:100%">
+                                        </div>
+                                        <div class="card-stacked" style="position:relative">
+                                            <div class="card-content" style="position:relative;top:10%;">
+                                                <a style="font-size:3vw;" class="indigo-text" 
+                                                {{ if eq .Params.draft false }}
+                                                    href="{{.Permalink}}"
+                                                {{ end }}>{{ .Params.title }}</a>
+                                                <p style="font-size:2vw;">{{ .Params.label }}</p>
+                                                <p style="font-size:1vw;">{{ (time .Params.when).Format "02 January, 2006" }}</p>
+                                            </div>
+                                            <div class="card-action indigo lighten-5">
+                                                {{ if eq .Params.draft false }}
+                                                    <a href="{{.Permalink}}" class="waves-effect waves-light btn indigo white-text">Details</a>
+                                                {{end}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        {{end}}
+                    {{end}}
+                {{end}}
+                <div class="row">
+                    <button class="btn waves-effect waves-light white indigo-text" style="position:relative;left:10%;" type="submit" name="action">Display Archived</button>                                        
+                </div>
+                {{ range ($ev.Data.Pages.ByParam "when") }} 
+                    {{ if eq .Params.association $name}}
+                        {{ if (time .Params.when).Before now}}
+                            <div class=" archived row" style="display:none;">
+                                <div class="col s12 m7">
+                                    <div class="card  horizontal white center indigo-text" style="height:20vw;position:relative;left:100%;">
+                                        <div class="card-image black" style="width:50%;">
+                                            <img src={{ .Params.photos }} style="width:100%;height:100%">
+                                        </div>
+                                        <div class="card-stacked" style="position:relative">
+                                            <div class="card-content" style="position:relative;top:10%;">
+                                                <a style="font-size:3vw;" class="indigo-text" 
+                                                {{if eq .Params.draft false}}
+                                                    href="{{.Permalink}}"
+                                                {{end}}>{{.Params.title}}</a>
+                                                <p style="font-size:2vw;">{{.Params.label}}</p>
+                                                <p style="font-size:1vw;">{{((time .Params.when).Format "02 January, 2006")}}</p>
+                                            </div>
+                                            <div class="card-action indigo lighten-5">
+                                                {{if eq .Params.draft false}}
+                                                    <a href="{{.Permalink}}" class="waves-effect waves-light btn indigo white-text">Details</a>
+                                                {{end}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        {{end}}
+                    {{end}}
+                {{end}}
+            </div>
+        </div>
+        {{ partial "footer.html" . }}
+        <script type="text/javascript">
+           
+            var bool = 0;
+            var elmt = document.getElementsByClassName("archived");
+            var b1 = document.querySelector("button");
+            b1.onclick = function() {
+               if (bool == 0) {
+                    for (var cn=0, len=elmt.length; cn < len; cn+=1) {
+                        elmt[cn].style.display="block";
+                    }
+                    b1.innerHTML = "Hide Archived";
+                    bool=1;
+                } else {
+                    for (var cn=0, len=elmt.length; cn < len; cn+=1){
+                        elmt[cn].style.display="none";
+                    }
+                    b1.innerHTML = "Display Archived";
+                    bool=0;
+                }
+            }
+        </script>
+    </body>
+</html>

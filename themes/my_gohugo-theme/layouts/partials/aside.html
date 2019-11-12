@@ -1,0 +1,14 @@
+<div class="card indigo lighten-5 right" style="width:15%;height:100%;position:sticky;top:0%;right:0%;">
+    <div class="card-content black-text">
+        <input id="search" type="search" required style="width:80%;">
+        <i class="material-icons">search</i>
+        {{ $asso := .Site.GetPage "/associations" }}  
+        {{ range  first 10 $asso.Data.Pages }}
+            {{ if eq .Params.important "true"}}
+                <h2 style="font-size: 1.3vw">
+                    <a href="{{ .Permalink }}" class="indigo-text">{{ .Title }}</a>
+                </h2>
+            {{ end }}
+        {{ end }}
+    </div>
+</div>
